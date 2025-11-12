@@ -128,7 +128,18 @@ async function run() {
       res.send(result);
     });
 
-    //========================
+    //Get manage-foods
+    app.get("/manage-foods", async (req, res) => {
+      const authorEmail = req.query.authorEmail || req.query.email;
+
+      let query = {};
+      if (authorEmail) query.authorEmail = authorEmail;
+
+      const foods = await foodCollection.find(query).toArray();
+      res.send(foods);
+    });
+
+    //**************************** */
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
   } finally {
