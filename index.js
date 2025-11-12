@@ -105,7 +105,10 @@ async function run() {
 
     // Get Food Requests
     app.get("/foodRequests", async (req, res) => {
-      const result = await foodRequestCollection.find().toArray();
+      const result = await foodRequestCollection
+        .find()
+        .sort({ _id: -1 })
+        .toArray();
       res.send(result);
     });
 
@@ -139,7 +142,7 @@ async function run() {
       res.send(foods);
     });
 
-    //**************************** */
+    //****************************** */
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
   } finally {
