@@ -32,7 +32,7 @@ async function run() {
 
     //find
     app.get("/foods", async (req, res) => {
-      const result = await foodCollection.find().toArray();
+      const result = await foodCollection.find().sort({ _id: -1 }).toArray();
       res.send(result);
     });
 
@@ -103,16 +103,16 @@ async function run() {
       res.send(result);
     });
 
-    // Get all requests
+    // Get Food Requests
     app.get("/foodRequests", async (req, res) => {
-      const { foodId } = req.query;
-      const result = await foodRequestCollection.find({ foodId }).toArray();
+      const result = await foodRequestCollection.find().toArray();
       res.send(result);
     });
 
-    // Add new food request
+    // Post Food Requests
     app.post("/foodRequests", async (req, res) => {
       const data = req.body;
+      console.log(data);
       const result = await foodRequestCollection.insertOne(data);
       res.send(result);
     });
